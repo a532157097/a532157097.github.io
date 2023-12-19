@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js/vue.js"></script>
+    <script src="./element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="./element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-row class="demo-autocomplete">
+            <el-col :span="12">
+                <el-autocomplete
+                        class="inline-input"
+                        v-model="state2"
+                        :fetch-suggestions="querySearch"
+                        placeholder="请输入内容"
+                        :trigger-on-focus="false"
+                        @select="handleSelect"
+                ></el-autocomplete>
+            </el-col>
+        </el-row>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+    </el-form>
+    <div style="color: #67C23A">{{res}}</div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                form: {},
+                restaurants: [],
+                res: '',
+                state1: '',
+                state2: '',
+                wzryMap: new Map(),
+                searchList: []
+            };
+        },
+        methods: {
+            querySearch(queryString, cb) {
+                var restaurants = this.restaurants;
+                var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+                // 调用 callback 返回建议列表的数据
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (restaurant) => {
+                    return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+            },
+            loadAll() {
+                return this.searchList;
+            },
+            handleSelect(item) {
+                console.log(item);
+            },
+            onSubmit() {
+                this.res = this.wzryMap.get(this.state2);
+                console.log(this.res);
+            }
+        },
+        mounted() {
+            var origin="典韦：艾琳，露娜，司空震\n" +
+                "兰陵王：貂蝉，百里，鬼谷子\n" +
+                "凯：阿珂，庄周，程咬金\n" +
+                "孙悟空：虞姬，盘古，刘婵\n" +
+                "刘备：凯，伽罗，娜可露露\n" +
+                "韩信：海月，暃，诸葛亮\n" +
+                "李元芳：盾山，宫本武藏，程咬金\n" +
+                "鲁班七号：刘备，嬴政，安琪拉\n" +
+                "亚瑟：典韦，蔡文姬，吕布\n" +
+                "李信：盾山，杨戬，金蝉\n" +
+                "夏侯惇：吕布，西施，姜子牙\n" +
+                "姬小满：嫦娥，白起，亚瑟\n" +
+                "瑶：伽罗，阿古朵，盾山\n" +
+                "东皇太一：哪吒，戈娅，莱西奥\n" +
+                "庄周：海诺，艾琳，貂蝉\n" +
+                "蔡文姬：盾山，鬼谷子，宫本武藏\n" +
+                "朵莉亚：司马懿，西施，甄姬\n" +
+                "钟馗：庄周，狄仁杰，阿古朵\n" +
+                "盾山：周瑜，王昭君，鲁班七号\n" +
+                "大乔：后羿，妲己，孙悟空\n" +
+                "安琪拉：曜，马超，镜\n" +
+                "妲己：盾山，蔡文姬，白起";
+            var split = origin.split("\n");
+            for (let str of split) {
+                var split1 = str.split("：");
+                var name=split1[0];
+                var value=split1[1];
+                this.wzryMap.set(name,value);
+                var currMap={"value":name};
+                this.searchList.push(currMap);
+            }
+            this.restaurants = this.loadAll();
+        }
+    });
+</script>
+</html>
