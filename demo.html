@@ -10,22 +10,52 @@
 <body>
 <div id="app">
     <el-row class="demo-autocomplete" type="flex" justify="space-around">
-        <el-col :span="12">
-            <el-autocomplete
-                    class="inline-input"
-                    v-model="state2"
-                    :fetch-suggestions="querySearch"
-                    placeholder="请输入内容"
-                    :trigger-on-focus="false"
-                    @select="handleSelect"
-            ></el-autocomplete>
-        </el-col>
+        <el-autocomplete
+                class="inline-input"
+                v-model="state2"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入内容"
+                :trigger-on-focus="false"
+                @select="handleSelect"
+        ></el-autocomplete>
     </el-row>
     <el-row type="flex" justify="space-around">
         <el-button type="primary" @click="onSubmit">查询</el-button>
     </el-row>
     <el-row type="flex" justify="space-around">
-        <div style="color: #67C23A">{{res}}</div>
+        <div style="color: #67C23A">{{res1}}</div>
+    </el-row>
+    <el-row class="demo-autocomplete" type="flex" justify="space-around">
+        <el-autocomplete
+                class="inline-input"
+                v-model="state3"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入内容"
+                :trigger-on-focus="false"
+                @select="handleSelect"
+        ></el-autocomplete>
+    </el-row>
+    <el-row type="flex" justify="space-around">
+        <el-button type="primary" @click="onSubmit2">查询</el-button>
+    </el-row>
+    <el-row type="flex" justify="space-around">
+        <div style="color: #67C23A">{{res2}}</div>
+    </el-row>
+    <el-row class="demo-autocomplete" type="flex" justify="space-around">
+        <el-autocomplete
+                class="inline-input"
+                v-model="state4"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入内容"
+                :trigger-on-focus="false"
+                @select="handleSelect"
+        ></el-autocomplete>
+    </el-row>
+    <el-row type="flex" justify="space-around">
+        <el-button type="primary" @click="onSubmit3">查询</el-button>
+    </el-row>
+    <el-row type="flex" justify="space-around">
+        <div style="color: #67C23A">{{res3}}</div>
     </el-row>
 </div>
 </body>
@@ -36,9 +66,13 @@
             return {
                 form: {},
                 restaurants: [],
-                res: '',
+                res1: '',
+                res2: '',
+                res3: '',
                 state1: '',
                 state2: '',
+                state3: '',
+                state4: '',
                 wzryMap: new Map(),
                 searchList: []
             };
@@ -62,8 +96,16 @@
                 console.log(item);
             },
             onSubmit() {
-                this.res = this.wzryMap.get(this.state2);
-                console.log(this.res);
+                this.res1 = this.wzryMap.get(this.state2);
+                console.log(this.res1);
+            },
+            onSubmit2() {
+                this.res2 = this.wzryMap.get(this.state3);
+                console.log(this.res2);
+            },
+            onSubmit3() {
+                this.res3 = this.wzryMap.get(this.state4);
+                console.log(this.res3);
             }
         },
         mounted() {
